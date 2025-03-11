@@ -6,16 +6,23 @@ const Hero = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0);
 
-  const totalVideos = 4;
+  const totalVideos = 3;
   const nextVideoRef = useRef(null); // we use ref to target a specific DOM element
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
   };
 
+  // 0%4 = 0 + 1 = 1
+  // 1%4 = 1 + 1 = 2
+  // 2%4 = 2 + 1 = 3
+  // 3%4 = 3 + 1 = 4
+  // 4%4 = 0 + 1 = 1
+  const upcommingVideoIndex = (currentIndex % totalVideos) + 1;
+
   const handleMiniVdClick = () => {
     setHasClicked(true);
-    setCurrentIndex((prevIndex) => prevIndex + 1);
+    setCurrentIndex(upcommingVideoIndex);
   };
 
   const getVideoSrc = (index) => {
@@ -26,8 +33,8 @@ const Hero = () => {
     <div className="realtive h-dvh w-screen overflow-x-hidden">
       <div
         id="video-frame"
-        className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg 
-        bg-blue-75"
+        className="relative z-10 h-dvh w-screen overflow-hidden 
+        rounded-lg bg-blue-75"
       >
         <div>
           <div
