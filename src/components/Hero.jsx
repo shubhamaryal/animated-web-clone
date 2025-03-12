@@ -1,13 +1,15 @@
 import React, { useState, useRef } from "react";
+import Button from "./Button";
+import { TiLocationArrow } from "react-icons/ti";
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1); // video's index
   const [hasClicked, setHasClicked] = useState(false); // to check if the user has clicked on the minivideo player
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0); // number of videos loaded
 
-  const totalVideos = 3; // total number of videos
-  const nextVideoRef = useRef(null); // this ref is used to target the next video
+  const totalVideos = 4; // total number of videos
+  const nextVdRef = useRef(null); // this ref is used to target the next video
   // we use ref to target a specific DOM element
 
   const handleVideoLoad = () => {
@@ -22,12 +24,12 @@ const Hero = () => {
   // 3%4 = 3 + 1 = 4
   // 4%4 = 0 + 1 = 1
   // we used maths to get the next video index in loop
-  const upcommingVideoIndex = (currentIndex % totalVideos) + 1;
+  const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
 
   // when we click the div of mini video player this function will be called
   const handleMiniVdClick = () => {
-    setHasClicked(true); // to check if the user has clicked on the minivideo player
-    setCurrentIndex(upcommingVideoIndex); // this provides which video will be played next
+    setHasClicked(true); // to check if the user has clicked on the mini video player
+    setCurrentIndex(upcomingVideoIndex); // this provides which video will be played next
   };
 
   // this function provides the source of the video
@@ -36,7 +38,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="realtive h-dvh w-screen overflow-x-hidden">
+    <div className="relative h-dvh w-screen overflow-x-hidden">
       {/* dv is dynamic viewport-percentage unit */}
       <div
         id="video-frame"
@@ -55,8 +57,8 @@ const Hero = () => {
               duration-500 ease-in hover:scale-100 hover:opacity-100"
             >
               <video
-                ref={nextVideoRef}
-                src={getVideoSrc(upcommingVideoIndex)}
+                ref={nextVdRef}
+                src={getVideoSrc(upcomingVideoIndex)}
                 // the mini video is 1 index ahead of the current video because
                 //  we want to show the next video in the mini video player
                 loop
@@ -68,10 +70,52 @@ const Hero = () => {
               ></video>
             </div>
           </div>
+          <video
+            ref={nextVdRef}
+            src={getVideoSrc(currentIndex)}
+            loop
+            muted
+            id="next-video"
+            className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
+            onLoadedData={handleVideoLoad}
+          ></video>
 
-          
+          <video
+            src={getVideoSrc(
+              currentIndex === totalVideos - 1 ? 1 : currentIndex
+            )}
+            autoPlay
+            loop
+            muted
+            className="absolute left-0 top-0 size-full object-cover object-center"
+            onLoadedData={handleVideoLoad}
+          ></video>
+        </div>
+        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
+          G<b>a</b>ming
+          {/* 'a' is in bold tag cuz we need to have different design of 'a' */}
+        </h1>
+        <div className="absolute left-0 top-0 z-40 size-full">
+          <div className="mt-24 px-5 sm:px-10">
+            <h1 className="special-font hero-heading text-blue-100">
+              REDEFI<b>N</b>E
+            </h1>
+            <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
+              Enter the Metagame Layer <br /> Unleash the Play Economy
+            </p>
+            <Button
+              id="watch-trailer"
+              title="Watch trailer"
+              leftIcon={<TiLocationArrow />}
+              containerClass="!bg-yellow-300 flex-center gap-1"
+            />
+          </div>
         </div>
       </div>
+      {/* when we scroll down, this h1 will be shown in the animation */}
+      <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
+        G<b>a</b>ming
+      </h1>
     </div>
   );
 };
