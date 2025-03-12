@@ -1,6 +1,12 @@
 import React, { useState, useRef } from "react";
 import Button from "./Button";
 import { TiLocationArrow } from "react-icons/ti";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useEffect } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1); // video's index
@@ -32,6 +38,57 @@ const Hero = () => {
     setCurrentIndex(upcomingVideoIndex); // this provides which video will be played next
   };
 
+  useEffect(() => {
+    if (loadedVideos === totalVideos - 1) {
+      setLoading(false);
+    }
+  }, [loadedVideos]);
+
+  useGSAP(
+    () => {
+      if (hasClicked) {
+        gsap.set("#next-video", { visibility: "visible" });
+        gsap.to("#next-video", {
+          transformOrigin: "center center",
+          scale: 1,
+          width: "100%",
+          height: "100%",
+          duration: 1,
+          ease: "power1.inOut",
+          onStart: () => nextVdRef.current.play(),
+        });
+        gsap.from("#current-video", {
+          transformOrigin: "center center",
+          scale: 0,
+          duration: 1.5,
+          ease: "power1.inOut",
+          onComplete: () => nextVdRef.current.pause(),
+        });
+      }
+    },
+    { dependencies: [currentIndex], revertOnUpdate: true }
+  );
+
+  useGSAP(() => {
+    gsap.set("#video-frame", {
+      clipPath: " polygon(14% 0%, 72% 0%, 90% 90%, 0% 100%)",
+      // clippath link is given below
+      // https://bennettfeely.com/clippy/
+      borderRadius: "0 0 40% 10%",
+    });
+    gsap.from("#video-frame", {
+      clipPath: " polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+      borderRadius: "0 0 0 0",
+      ease: "power1.inOut",
+      scrollTrigger: {
+        trigger: "#video-frame",
+        start: "center center",
+        end: "bottom center",
+        scrub: true,
+      },
+    });
+  });
+
   // this function provides the source of the video
   const getVideoSrc = (index) => {
     return `videos/hero-${index}.mp4`;
@@ -40,6 +97,17 @@ const Hero = () => {
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {/* dv is dynamic viewport-percentage unit */}
+      {loading && (
+        <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+          {/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
+          <div className="three-body">
+            <div className="three-body__dot"></div>
+            <div className="three-body__dot"></div>
+            <div className="three-body__dot"></div>
+          </div>
+        </div>
+      )}
+
       <div
         id="video-frame"
         className="relative z-10 h-dvh w-screen overflow-hidden 
@@ -47,7 +115,7 @@ const Hero = () => {
       >
         <div>
           <div
-            className="mask-clip-path absolute-center absolute z-10 
+            className="mask-clip-path absolute-center absolute z-50 
             size-64 cursor-pointer overflow-hidden rounded-lg"
           >
             {/* the div below is the one that contains the mini video player */}
@@ -58,7 +126,7 @@ const Hero = () => {
             >
               <video
                 ref={nextVdRef}
-                src={getVideoSrc(upcomingVideoIndex)}
+                src={getVideoSrc((currentIndex % totalVideos) + 1)}
                 // the mini video is 1 index ahead of the current video because
                 //  we want to show the next video in the mini video player
                 loop
@@ -91,10 +159,14 @@ const Hero = () => {
             onLoadedData={handleVideoLoad}
           ></video>
         </div>
+
+
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
           G<b>a</b>ming
           {/* 'a' is in bold tag cuz we need to have different design of 'a' */}
         </h1>
+
+
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
             <h1 className="special-font hero-heading text-blue-100">
@@ -107,14 +179,17 @@ const Hero = () => {
               id="watch-trailer"
               title="Watch trailer"
               leftIcon={<TiLocationArrow />}
-              containerClass="!bg-yellow-300 flex-center gap-1"
+              containerClass="bg-yellow-300 flex-center gap-1"
             />
           </div>
         </div>
       </div>
+
+
+
       {/* when we scroll down, this h1 will be shown in the animation */}
       <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
-        G<b>a</b>ming
+        G<b>A</b>MING
       </h1>
     </div>
   );
