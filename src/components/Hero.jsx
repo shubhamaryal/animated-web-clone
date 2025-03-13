@@ -160,12 +160,10 @@ const Hero = () => {
           ></video>
         </div>
 
-
         <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
           G<b>a</b>ming
           {/* 'a' is in bold tag cuz we need to have different design of 'a' */}
         </h1>
-
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
@@ -184,8 +182,6 @@ const Hero = () => {
           </div>
         </div>
       </div>
-
-
 
       {/* when we scroll down, this h1 will be shown in the animation */}
       <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
