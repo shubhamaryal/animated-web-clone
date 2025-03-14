@@ -6,7 +6,8 @@ import Navbar from "./components/Navbar";
 const App = () => {
   return (
     <main className="relative min-h-screen w-screen overflow-x-hidden">
-      {/* minimum height is the height of the screen and the width is the width of the screen and overflow is hidden to avoid those scrollbars */}
+      {/* minimum height is the height of the screen and the width is the width of the screen and overflow is hidden to avoid horizontal scrollbars */}
+      {/* relative absolute is for positioning the elements */}
       <Navbar />
       <Hero />
       <About />
