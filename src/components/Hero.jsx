@@ -9,9 +9,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(1); // video's index
-  const [hasClicked, setHasClicked] = useState(false); // to check if the user has clicked on the minivideo player
-  const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(1); // tracks current playing video's index
+  const [hasClicked, setHasClicked] = useState(false); // to check if the user has clicked on the mini video player
+  const [loading, setLoading] = useState(true); // determine if the videos are loaded
   const [loadedVideos, setLoadedVideos] = useState(0); // number of videos loaded
 
   const totalVideos = 4; // total number of videos
@@ -62,7 +62,6 @@ const Hero = () => {
           scale: 0,
           duration: 1.5,
           ease: "power1.inOut",
-
         });
       }
     },
@@ -98,6 +97,7 @@ const Hero = () => {
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {/* dv is dynamic viewport-percentage unit */}
       {/* relative for positioning the elements and overflow-x-hidden is for avoiding horizontal scrollbar */}
+      {/* when loading is true, the loading screen will be shown else the other div will be shown */}
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
           {/* flex-center is flex, justify-center, item-center */}
@@ -128,7 +128,7 @@ const Hero = () => {
             >
               <video
                 ref={nextVdRef}
-                src={getVideoSrc((currentIndex % totalVideos) + 1)}
+                src={getVideoSrc((currentIndex % totalVideos) + 1)} // getVideoSrc(upcomingVideoIndex)
                 // the mini video is 1 index ahead of the current video because
                 //  we want to show the next video in the mini video player
                 loop
@@ -140,9 +140,10 @@ const Hero = () => {
               ></video>
             </div>
           </div>
+          {/* preloads the next video and is invisible */}
           <video
             ref={nextVdRef}
-            src={getVideoSrc(currentIndex)}
+            src={getVideoSrc(currentIndex)} 
             loop
             muted
             id="next-video"
@@ -150,6 +151,7 @@ const Hero = () => {
             onLoadedData={handleVideoLoad}
           ></video>
 
+          {/* current playing video */}
           <video
             src={getVideoSrc(
               currentIndex === totalVideos - 1 ? 1 : currentIndex
