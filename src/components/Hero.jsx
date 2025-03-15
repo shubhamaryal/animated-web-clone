@@ -62,7 +62,7 @@ const Hero = () => {
           scale: 0,
           duration: 1.5,
           ease: "power1.inOut",
-          onComplete: () => nextVdRef.current.pause(),
+
         });
       }
     },
@@ -97,8 +97,10 @@ const Hero = () => {
   return (
     <div className="relative h-dvh w-screen overflow-x-hidden">
       {/* dv is dynamic viewport-percentage unit */}
+      {/* relative for positioning the elements and overflow-x-hidden is for avoiding horizontal scrollbar */}
       {loading && (
         <div className="flex-center absolute z-[100] h-dvh w-screen overflow-hidden bg-violet-50">
+          {/* flex-center is flex, justify-center, item-center */}
           {/* https://uiverse.io/G4b413l/tidy-walrus-92 */}
           <div className="three-body">
             <div className="three-body__dot"></div>
