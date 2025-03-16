@@ -143,7 +143,7 @@ const Hero = () => {
           {/* preloads the next video and is invisible */}
           <video
             ref={nextVdRef}
-            src={getVideoSrc(currentIndex)} 
+            src={getVideoSrc(currentIndex)}
             loop
             muted
             id="next-video"
