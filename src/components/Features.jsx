@@ -10,7 +10,8 @@ const BentoTilt = ({ children, className = "" }) => {
     const { left, top, width, height } =
       itemRef.current.getBoundingClientRect(); // get the position of the element
 
-    const relativeX = (e.clientX - left) / width;
+    // e.clientX and e.clientY give the position of the mouse 
+    const relativeX = (e.clientX - left) / width; 
     const relativeY = (e.clientY - top) / height;
 
     const titleX = (relativeX - 0.5) * 5;
