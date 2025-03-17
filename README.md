@@ -1,12 +1,53 @@
-# React + Vite
+# Awarded Web Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern gaming platform clone featuring interactive videos, 3D effects, and smooth animations. Built with React, GSAP, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## ✨ Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Interactive video transitions with preview
+- 3D hover effects on cards
+- Custom loading animations
+- Responsive design
+- Modern UI with custom fonts
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+awarded_web_clone/
+├── public/
+│   ├── fonts/
+│   │   ├── circularweb-book.woff2
+│   │   ├── general.woff2
+│   │   ├── robert-medium.woff2
+│   │   ├── robert-regular.woff2
+│   │   └── zentry-regular.woff2
+│   └── videos/
+│       ├── hero-[1-4].mp4
+│       └── feature-[1-5].mp4
+├── src/
+│   ├── components/
+│   │   ├── Hero.jsx           # Main video player component
+│   │   ├── Features.jsx       # 3D tilt cards grid
+│   │   ├── Button.jsx         # Reusable button
+│   │   ├── About.jsx          # About section
+│   │   ├── Contact.jsx        # Contact section
+│   │   ├── Footer.jsx         # Footer component
+│   │   ├── Gallery.jsx        # Image gallery
+│   │   ├── Navbar.jsx         # Navigation bar
+│   │   └── Story.jsx          # Story section
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css             # Styles and Tailwind utilities
+└── package.json
+```
+
+## 🛠️ Built With
+
+- React 19
+- GSAP (Animations)
+- Tailwind CSS
+- Vite
+
+## 🤝 Contributing
+
+Feel free to contribute! Open an issue or submit PRs.
