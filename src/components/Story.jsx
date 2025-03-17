@@ -1,12 +1,44 @@
 import React, { useRef } from "react";
 import AnimatedTitle from "./AnimatedTitle";
+import gsap from "gsap";
 
 const Story = () => {
   const frameRef = useRef(null);
 
-  const handleMouseLeave = () => {};
+  const handleMouseLeave = () => {
+    const element = frameRef.current;
 
-  const handleMouseMove = (e) => {};
+    gsap.to(element, {
+      duration: 0.3,
+      rotateX: 0,
+      rotateY: 0,
+      ease: "power1.inOut",
+    });
+  };
+
+  const handleMouseMove = (e) => {
+    const { clientX, clientY } = e; // the mouse position
+    const element = frameRef.current; // the element that we are hovering
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+    const x = clientX - rect.left; // to calculate the center of the image
+    const y = clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    gsap.to(element, {
+      duration: 0.3,
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transformPerspective: 500,
+      ease: "power1.inOut",
+    });
+  };
 
   return (
     <section id="story" className="min-h-dvh w-screen bg-black text-blue-50">
