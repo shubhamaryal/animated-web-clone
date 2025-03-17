@@ -6,8 +6,14 @@ import Features from "./components/Features";
 import Story from "./components/Story";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import LocomotiveScroll from "locomotive-scroll";
+import { useEffect } from "react";
 
 const App = () => {
+  useEffect(() => {
+    const locomotiveScroll = new LocomotiveScroll();
+  }, []);
+
   return (
     <main className="relative min-h-screen w-screen overflow-x-hidden">
       {/* minimum height is the height of the screen and the width is the width of the screen and overflow is hidden to avoid horizontal scrollbars */}
